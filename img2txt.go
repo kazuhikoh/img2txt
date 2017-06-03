@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"image"
+	"image/color"
 	_ "image/jpeg"
 	_ "image/png"
 	"log"
@@ -44,6 +45,13 @@ func main() {
 		return i
 	}()
 
-	fmt.Println(img.At(0, 0))
-	fmt.Printf("(w,h)=(%d,%d)\n", conf.Width, conf.Height)
+	table := make([][]color.Color, 0)
+	for w := 0; w < conf.Width; w++ {
+		row := make([]color.Color, 0)
+		for h := 0; h < conf.Height; h++ {
+			row = append(row, img.At(w, h))
+		}
+		table = append(table, row)
+	}
+	fmt.Println(table)
 }
