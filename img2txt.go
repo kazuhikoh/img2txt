@@ -45,13 +45,18 @@ func main() {
 		return i
 	}()
 
-	table := make([][]color.Color, 0)
-	for w := 0; w < conf.Width; w++ {
-		row := make([]color.Color, 0)
-		for h := 0; h < conf.Height; h++ {
-			row = append(row, img.At(w, h))
+	for h := 0; h < conf.Height; h++ {
+		for w := 0; w < conf.Width; w++ {
+			fmt.Print(colorize("■", img.At(w, h)))
 		}
-		table = append(table, row)
+		fmt.Println()
 	}
-	fmt.Println(table)
+}
+
+func colorize(word string, c color.Color) string {
+	r, g, b, _ := c.RGBA()
+	r = ((r + 1) / 256) - 1
+	g = ((g + 1) / 256) - 1
+	b = ((b + 1) / 256) - 1
+	return "\033[38;2;" + fmt.Sprint(r) + ";" + fmt.Sprint(g) + ";" + fmt.Sprint(b) + "m" + word + "\033[0m"
 }
